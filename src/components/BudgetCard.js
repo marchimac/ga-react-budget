@@ -1,10 +1,10 @@
-import React from 'react'
-import { Button, Card, ProgressBar, Stack } from 'react-bootstrap'
-import { currencyFormatter } from '../utils/utils'
+import React from 'react'                                                     /* Importamos React desde Node Modules */
+import { Button, Card, ProgressBar, Stack } from 'react-bootstrap'            /* Importamos clases desde Node Modules */
+import { currencyFormatter } from '../utils/utils'                            /* Importamos el nuevo objeto desde la carpeta utils */
 
-export default function BudgetCard( {name, amount, max, gray} ) {
-  const classNames = []
-  if( amount > max ) {
+export default function BudgetCard( {name, amount, max, gray} ) {             /* Creamos una función para crear las tarjetas de los presupuestos */
+  const classNames = []                                                       /* Creamos una constante como array para almacenar las clases que vamos a insertar para modificar el aspecto */
+  if( amount > max ) {                                                        /* Si la cantidad gastada es mayor que la cantidad disponible ponemos el fondo de la tarjeta en rojo */
     classNames.push('bg-danger', 'bg-opacity-10')
   } else if (gray) {
     classNames.push('bg-light')
