@@ -6,7 +6,10 @@ import { BudgetProvider } from './contexts/BudgetContexts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BudgetProvider>
-    <App />
-  </BudgetProvider>
+  <React.StrictMode>
+    <BudgetProvider>
+      <App />
+    </BudgetProvider>
+  </React.StrictMode>
+  
 );
