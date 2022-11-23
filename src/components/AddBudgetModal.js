@@ -12,6 +12,7 @@ export default function AddBudgetModal({ show, handleClose}) {
       name: nameRef.current.value,
       max: parseFloat(maxRef.current.value)
     })
+    handleClose()
   }
   return (
     <Modal show={show} onHide={handleClose}>
@@ -30,7 +31,7 @@ export default function AddBudgetModal({ show, handleClose}) {
             <Form.Control ref={ maxRef } type='number' required min={0} step={0.01} />
           </Form.Group>
           <div className='d-flex justify-content-end'>
-            <Button variant='primary' type='submit'>Agregar</Button>
+            <Button variant='primary' type='submit' >Agregar</Button>
           </div>
         </Modal.Body>
       </Form>
