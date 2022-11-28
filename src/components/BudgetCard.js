@@ -2,7 +2,7 @@ import React from 'react'                                                       
 import { Button, Card, ProgressBar, Stack } from 'react-bootstrap'                              /* Importamos clases desde Node Modules */
 import { currencyFormatter } from '../utils/utils'                                              /* Importamos el nuevo objeto desde la carpeta utils */
 
-export default function BudgetCard( {name, amount, max, gray, onAddExpenseClick} ) {            /* Creamos una función para crear las tarjetas de los presupuestos */
+export default function BudgetCard( {name, amount, max, gray, onAddExpenseClick, hideButtons, onViewExpensesModal } ) {            /* Creamos una función para crear las tarjetas de los presupuestos */
   const classNames = []                                                                         /* Creamos una constante como array para almacenar las clases que vamos a insertar para modificar el aspecto */
   if( amount > max ) {                                                                          /* Si la cantidad gastada es mayor que la cantidad disponible ponemos el fondo de la tarjeta en rojo */
     classNames.push('bg-danger', 'bg-opacity-10')
@@ -16,20 +16,28 @@ export default function BudgetCard( {name, amount, max, gray, onAddExpenseClick}
             <Card.Title className='d-flex justify-content-between align-items-baseline fw-normal mb-3'>
                 <div className='me-2'>{name}</div>
                 <div className='d-flex align-items-baseline'>
-                  {currencyFormatter.format(amount)} / <span className='text-muted fs-6 ms-1'>{currencyFormatter.format(max)}</span>
+                  {currencyFormatter.format(amount)}
+                  {max && (<span className='text-muted fs-6 ms-1'> / {currencyFormatter.format(max)}</span>)}
                   </div>
             </Card.Title>
-            <ProgressBar
-              className='rounded-pill'
-              variant={getBarVariant(amount, max)}
-              min={0}
-              max={max}
-              now={amount}
-            />
-            <Stack direction='horizontal' gap='2' className='mt-4 justify-content-between'>
-              <Button variant='outline-primary' onClick={onAddExpenseClick} >Agregar gasto</Button>
-              <Button variant='outline-secondary' >Ver gastos</Button>
-            </Stack>
+            {
+              max && (
+                <ProgressBar
+                className='rounded-pill'
+                variant={getBarVariant(amount, max)}
+                min={0}
+                max={max}
+                now={amount}
+                />
+              )}
+            {
+              !hideButtons && (
+              <Stack direction='horizontal' gap='2' className='mt-4 justify-content-between'>
+                <Button variant='outline-primary' onClick={onAddExpenseClick} >Agregar gasto</Button>
+                <Button variant='outline-secondary' onClick={onViewExpensesModal} >Ver gastos</Button>
+              </Stack>
+              )
+            }
         </Card.Body>
     </Card>
   )

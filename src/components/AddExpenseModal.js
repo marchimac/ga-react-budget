@@ -42,7 +42,7 @@ export default function AddExpenseModal({ show, handleClose, defaultBudgetId}) {
               defaultValue={ defaultBudgetId }
               ref={ budgetIdRef }
             >
-              <option id={ UNCATEGORIZED_BUDGET_ID } value={0}>{ UNCATEGORIZED_BUDGET_ID}</option>
+              <option id={ UNCATEGORIZED_BUDGET_ID }>{ UNCATEGORIZED_BUDGET_ID}</option>
               { budgets.map( budget => (
                 <option key={ budget.id } value={ budget.id } >{ budget.name }</option>
               ) ) }
