@@ -1,20 +1,49 @@
-import React from 'react'
-import { Modal } from 'react-bootstrap'
-import { useBudgets } from '../contexts/BudgetContexts'
+import { Modal, Button, Stack } from 'react-bootstrap'
+import { UNCATEGORIZED_BUDGET_ID, useBudgets } from '../contexts/BudgetContexts'
+import { currencyFormatter } from '../utils/utils'
 
-export default function ViewExpensesModal({show, handleClose, budgetId}) {
-    const { budgets } = useBudgets()
-    const budgetNames = budgets.filter(budget => budget.id === budgetId)
-    const expensesName = budgetNames.map(budget => budget.name)
+export default function ViewExpenseModal({ budgetId, handleClose }) {
+  const { getBudgetExpenses, budgets, deleteBudget, deleteExpense } = useBudgets()
+  const budget = UNCATEGORIZED_BUDGET_ID === budgetId
+    ? { name: "Sin Categoría", id: UNCATEGORIZED_BUDGET_ID }
+    : budgets.find( b => b.id === budgetId)
 
-    console.log(budgetNames);
-  return ( 
-    <Modal show={show} onHide={handleClose}>
+    const expenses = getBudgetExpenses(budgetId)
+
+  return (
+    <Modal show={ budgetId != null } onHide={handleClose}>
         <Modal.Header closeButton>
-          {expensesName}
+            <Modal.Title>
+              <Stack direction='horizontal' gap="2">
+                <div>Gastos - {budget?.name}</div>
+                { budgetId !== UNCATEGORIZED_BUDGET_ID && (
+                  <Button
+                  onClick={ () => {
+                    deleteBudget(budget)
+                    handleClose()
+                  } }
+                  variant="outline-danger"
+                >
+                  Borrar
+                </Button>
+                ) }
+              </Stack>
+              </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Un texto cualquiera
+          <Stack direction='vertical' gap='3'>
+            { expenses.map( expense => (
+              <Stack direction='horizontal' gap='2' key={expense.id}>
+                <div className='me-auto fs-4'>{expense.description}</div>
+                <div className='fs-5'>{currencyFormatter.format(expense.amount)}</div> 
+                <Button
+                  size='sm'
+                  variant='outline-danger'
+                  onClick={() => deleteExpense(expense)}
+                  >&times;</Button>
+              </Stack>
+            ) ) }
+          </Stack>
         </Modal.Body>
     </Modal>
   )

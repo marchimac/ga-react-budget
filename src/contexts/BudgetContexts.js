@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'    /* useState dentro de las llaves */
+import React, { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 import useLocalStorage from '../hooks/useLocalStorage'
 
@@ -40,6 +40,8 @@ export const BudgetProvider = ({ children }) => {
   }
 
   function deleteBudget({ id }) {
+    const expenses = getBudgetExpenses(id)
+    expenses.map( expenses => deleteExpense(expenses))
     setBudgets(prevBudgets => {
       return prevBudgets.filter(budget => budget.id !== id)
     })
@@ -58,15 +60,3 @@ export const BudgetProvider = ({ children }) => {
           {children}
        </BudgetContext.Provider>)
 }
-
-
-// Budget (objeto)
-// id
-// name
-// max
-
-// Expense (objeto)
-// id
-// IDpresupuesto
-// descripcion
-// cantidad
