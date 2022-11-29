@@ -8,6 +8,7 @@ import UncategorizedBudgetCard from "./components/UncategorizedBudgetCard";
 import TotalBudgetCard from "./components/TotalBudgetCard";
 import ViewExpensesModal from "./components/ViewExpensesModal";
 import { UNCATEGORIZED_BUDGET_ID, useBudgets } from "./contexts/BudgetContexts"
+import DataFromApi from "./components/DataFromApi";
 
 
 function App() {
@@ -71,6 +72,9 @@ function App() {
         budgetId={ ViewExpenseModalBudgetId }
         handleClose={ () => setViewExpenseModalBudgetId() }
       />
+      <Container className='mt-2 mb-2'>
+        <DataFromApi />
+      </Container>
     </>
   );
 }
